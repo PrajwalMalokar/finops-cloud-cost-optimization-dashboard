@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 AWS_REGION = os.getenv("AWS_REGION")
-client=boto3.client("ce",AWS_REGION)
+client=boto3.client("ce",region_name=AWS_REGION)
 
 response = client.get_cost_and_usage(
     TimePeriod={"Start": "2025-03-01", "End": "2025-03-31"},

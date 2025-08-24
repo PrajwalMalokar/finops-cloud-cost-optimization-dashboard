@@ -1,7 +1,7 @@
 import sqlite3, os
 from dotenv import load_dotenv
 import pandas as pd
-from scripts.fetch_api import fetch_cost_data
+from fetch_api import fetch_cost_data
 
 
 load_dotenv(override=True)

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 load_dotenv(override=True)
 
 AWS_REGION = os.getenv("AWS_REGION")
+INRConstant=os.getenv("INRConstant")
 def fetch_cost_data(start_date, end_date):
 
     client=boto3.client("ce",region_name=AWS_REGION)
@@ -57,7 +58,7 @@ def fetch_cost_data(start_date, end_date):
                 "UsageType": usage_type,
                 "UsageQuantity": usage_quantity,
                 "UsageUnit": usage_unit,
-                "CostINR": unblended_cost * 82.0 # 1 USD = 82 INR
+                "CostINR": unblended_cost * INRConstant
             })
 
     return rows

@@ -131,6 +131,21 @@ python scripts/update_status.py
 ```
 This updates the `status` column for each row in `usage`.
 
+## Alert/flag logic
+
+The script `scripts/update_status.py` flags each row as "At-Risk" or "Safe" based on `service` and `usage_quantity`:
+
+- AmazonEC2: At-Risk if usage_quantity > 720 (e.g., hours/month)
+- AmazonRDS: At-Risk if usage_quantity > 720 (e.g., hours/month)
+- AmazonS3: At-Risk if usage_quantity > 5 (e.g., TB or a chosen unit)
+- AmazonLambda: At-Risk if usage_quantity > 1,000,000 (invocations)
+- AmazonCloudWatch: At-Risk if usage_quantity > 1000 (metrics/logs as per unit)
+- Otherwise: Safe
+
+Notes
+- `usage_quantity` is coerced to float; non-numeric values default to 0.
+- Thresholds are hard-coded in `update_status.py`. Adjust them to fit your environment or convert them to config/envs if needed.
+
 ## License 
 
 This project is licensed under the MIT License.

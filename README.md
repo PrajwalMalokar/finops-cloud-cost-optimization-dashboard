@@ -7,10 +7,16 @@ finops-cloud-cost-optimization-dashboard/
 - scripts/
   - main.py          # orchestrates fetch + insert into sqlite
   - fetch_api.py     # calls AWS Cost Explorer and returns rows
+  - update_status.py # new: auxiliary script (status/update utilities)
 - db/
   - usage.db         # SQLite DB (gitignored)
 - docs/
   - setup.md         # AWS CLI / credentials setup
+- screenshots/
+  - At-RiskServices.png
+  - CostByService.png
+  - SafeVsAt-RiskCount.png
+  - Top5CostlyUsageTypes.png
 - .env               # environment variables (gitignored)
 - requirements.txt
 - README.md
@@ -70,6 +76,18 @@ What it does:
 - Converts returned rows to a DataFrame and inserts into `usage` table using `INSERT OR IGNORE` (idempotent)
 - Prints first 5 rows as a quick check
 
+## Screenshots
+
+Below are sample visuals generated/used with this project (stored under `screenshots/`):
+
+![Cost by Service](screenshots/CostByService.png)
+
+![Top 5 Costly Usage Types](screenshots/Top5CostlyUsageTypes.png)
+
+![Safe vs At-Risk Count](screenshots/SafeVsAt-RiskCount.png)
+
+![At-Risk Services](screenshots/At-RiskServices.png)
+
 ## Database schema
 The `usage` table columns:
 - id INTEGER PRIMARY KEY AUTOINCREMENT
@@ -79,6 +97,7 @@ The `usage` table columns:
 - usage_quantity REAL
 - usage_unit TEXT
 - cost_inr REAL
+ - status TEXT
 
 Unique constraint: UNIQUE(date, service, usage_type)
 
@@ -104,5 +123,14 @@ Unique constraint: UNIQUE(date, service, usage_type)
 - `fetch_api.py` expects Cost Explorer response structure; costs are converted to INR using `INRConstant` from `.env`.
 - For production or multi-user usage, consider a managed DB and secure secret storage.
 
-## License / Contact
-Add license and contact details as
+### Updating "status"
+Run the helper to assign Safe/At-Risk based on simple thresholds:
+
+```bash
+python scripts/update_status.py
+```
+This updates the `status` column for each row in `usage`.
+
+## License 
+
+This project is licensed under the MIT License.

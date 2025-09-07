@@ -76,6 +76,11 @@ What it does:
 - Converts returned rows to a DataFrame and inserts into `usage` table using `INSERT OR IGNORE` (idempotent)
 - Prints first 5 rows as a quick check
 
+## Project Report (PDF)
+The 1–2 page project report is available at the repo root:
+
+- [FinOps Dashboard for Cloud Cost Visibility.pdf](reports/Project%20Report.pdf)
+
 ## Screenshots
 
 Below are sample visuals generated/used with this project (stored under `screenshots/`):
